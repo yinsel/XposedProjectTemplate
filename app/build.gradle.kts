@@ -21,6 +21,7 @@ require(!signingRequested || releaseSigningReady) { "Release signing requires al
 android {
     namespace = "com.example.xposed"
     compileSdk = 37
+    buildToolsVersion = "37.0.0"
 
     defaultConfig {
         applicationId = templateValue("module.applicationId")

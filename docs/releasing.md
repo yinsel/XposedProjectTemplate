@@ -2,7 +2,7 @@
 
 ## 普通构建
 
-`Build` 支持所有分支推送、PR 与 Actions 页的手动触发。Fork PR 也可以执行，不读取仓库 Secrets，不使用 `pull_request_target`。产物包含可安装的 Debug 模块和 Debug 宿主；Release 编译用于检查，未签名 APK 不作为可安装产物发布。
+`Build` 支持所有分支推送、PR 与 Actions 页的手动触发。Fork PR 也可以执行，不读取仓库 Secrets，不使用 `pull_request_target`。国内源与官方源分别执行构建。产物包含可安装的 Debug 模块和 Debug 宿主；Release 编译用于检查，未签名 APK 不作为可安装产物发布。官方源任务会额外使用一次性密钥执行签名构建与 `apksigner verify`，随后删除密钥，不发布此测试 APK。
 
 ## 配置签名
 

@@ -3,6 +3,7 @@ plugins { alias(libs.plugins.android.application) }
 android {
     namespace = "com.example.xposed.demo"
     compileSdk = 37
+    buildToolsVersion = "37.0.0"
     defaultConfig {
         applicationId = "com.example.xposed.demo"
         minSdk = 26

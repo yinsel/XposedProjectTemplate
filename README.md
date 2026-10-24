@@ -79,7 +79,7 @@ adb logcat -s YukiTemplate
 
 ## 自动构建与发布
 
-`Build` 工作流在分支推送、PR 或手动运行时执行 Python 检查、单元测试、Lint、Debug/Release 编译和 APK 检查。成功后可从 Actions 下载模块和宿主的 Debug APK。普通构建不需要任何签名密钥。
+`Build` 工作流在分支推送、PR 或手动运行时，分别使用国内源和官方源执行 Python 检查、单元测试、Lint、Debug/Release 编译和 APK 检查。官方源任务另用一次性密钥验证 Release 签名配置，测试密钥不会发布。成功后可从 Actions 下载模块和宿主的 Debug APK。普通构建不需要任何正式签名密钥。
 
 正式发布需要先配置四项 GitHub Secrets，递增 `module.versionCode`，设置 `module.versionName`，提交后推送匹配的 `v版本号` 标签。`Release` 工作流验证签名并发布 APK 和 `SHA256SUMS.txt`，预发布版本会标记为 prerelease。完整步骤见 [发布指南](docs/releasing.md)。
 

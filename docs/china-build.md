@@ -31,7 +31,7 @@ Gradle 已下载完成后，也可仅切换依赖源：
 ./gradlew -PrepositoryMode=official :app:assembleDebug
 ```
 
-该参数不会更改 Wrapper 分发地址。GitHub Actions 使用切源脚本，避免海外 runner 绕行国内镜像。
+该参数不会更改 Wrapper 分发地址。GitHub Actions 的 Build 矩阵分别验证两种模式；Release 使用官方源，避免正式发布依赖国内镜像的同步时间。
 
 ## 校验与代理
 

@@ -15,8 +15,13 @@ concurrency:
 
 jobs:
   build:
+    name: Build (${{ matrix.repository-mode }})
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        repository-mode: [official, china]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -25,8 +30,10 @@ jobs:
         run: |
           python3 scripts/validate_template.py
           python3 -m unittest discover -s scripts -p 'test_*.py' -v
-      - name: Use official repositories on GitHub runners
-        run: python3 scripts/configure_repositories.py --mode official
+      - name: Select repositories
+        env:
+          REPOSITORY_MODE: ${{ matrix.repository-mode }}
+        run: python3 scripts/configure_repositories.py --mode "$REPOSITORY_MODE"
       - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
         with:
           distribution: temurin
@@ -44,10 +51,13 @@ jobs:
       - name: Verify packaged Xposed entries
         run: |
           python3 scripts/verify_apk.py app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/release/app-release-unsigned.apk
+      - name: Check Release signing with a disposable key
+        if: matrix.repository-mode == 'official'
+        run: python3 scripts/smoke_signing.py
       - name: Upload installable debug APKs
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: debug-apks-${{ github.sha }}
+          name: debug-apks-${{ matrix.repository-mode }}-${{ github.sha }}
           path: |
             app/build/outputs/apk/debug/*.apk
             demo-app/build/outputs/apk/debug/*.apk
@@ -57,7 +67,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: reports-${{ github.sha }}
+          name: reports-${{ matrix.repository-mode }}-${{ github.sha }}
           path: |
             app/build/reports/
             demo-app/build/reports/

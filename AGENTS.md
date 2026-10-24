@@ -16,7 +16,7 @@
 - 一次构建只使用一个 runtime，Xposed API 只用 `compileOnly`。
 - AGP 9 自带 Kotlin。不要额外应用 `org.jetbrains.kotlin.android`。
 - 不使用 `+`、SNAPSHOT 等动态依赖。升级 YukiHook 时统一 BOM 与 compiler；检查 AGP、Gradle、Kotlin、KSP、SDK 的兼容性。
-- 本地默认国内源。GitHub Actions 切换官方源的修改仅发生在 runner 工作区，不应把此临时切换提交回来。
+- 本地默认国内源。GitHub Actions 的 Build 矩阵验证两种源，Release 使用官方源；runner 中的临时切源修改不应提交回来。
 
 ## 验证命令
 
