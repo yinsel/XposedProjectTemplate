@@ -3,7 +3,14 @@ pluginManagement {
         val mode = providers.gradleProperty("repositoryMode").orElse("china").get()
         require(mode in setOf("china", "official")) { "repositoryMode must be china or official" }
         if (mode == "china") {
-            maven("https://maven.aliyun.com/repository/google")
+            maven("https://maven.aliyun.com/repository/google") {
+                content {
+                    includeGroupByRegex("com\\.android.*")
+                    includeGroupByRegex("androidx.*")
+                    includeGroupByRegex("com\\.google\\.android.*")
+                    includeGroup("com.google.testing.platform")
+                }
+            }
             maven("https://maven.aliyun.com/repository/gradle-plugin")
             maven("https://maven.aliyun.com/repository/central")
         }
@@ -17,7 +24,14 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         if (providers.gradleProperty("repositoryMode").orElse("china").get() == "china") {
-            maven("https://maven.aliyun.com/repository/google")
+            maven("https://maven.aliyun.com/repository/google") {
+                content {
+                    includeGroupByRegex("com\\.android.*")
+                    includeGroupByRegex("androidx.*")
+                    includeGroupByRegex("com\\.google\\.android.*")
+                    includeGroup("com.google.testing.platform")
+                }
+            }
             maven("https://maven.aliyun.com/repository/central")
             maven("https://maven.aliyun.com/repository/public") {
                 content { includeGroup("de.robv.android.xposed") }
