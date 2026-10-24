@@ -1,4 +1,12 @@
 pluginManagement {
+    // 直接解析 KSP 发布坐标，避免部分镜像探测不存在的 marker JAR 时返回 5xx。
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == "com.google.devtools.ksp") {
+                useModule("com.google.devtools.ksp:symbol-processing-gradle-plugin:${requested.version}")
+            }
+        }
+    }
     repositories {
         val mode = providers.gradleProperty("repositoryMode").orElse("china").get()
         require(mode in setOf("china", "official")) { "repositoryMode must be china or official" }

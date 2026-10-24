@@ -52,7 +52,10 @@ android {
             if (releaseSigningReady) signingConfig = signingConfigs.getByName("release")
         }
     }
-    buildFeatures { buildConfig = true }
+    buildFeatures {
+        buildConfig = true
+        resValues = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17

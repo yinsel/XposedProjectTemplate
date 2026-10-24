@@ -1,6 +1,7 @@
 """无需 Android SDK 的配置、入口及切源回归测试。"""
 from pathlib import Path
 import shutil
+import re
 import struct
 import tempfile
 import unittest
@@ -40,9 +41,11 @@ class TemplateTest(unittest.TestCase):
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(ROOT / name, target)
 
-    def change(self, before, after):
+    def change(self, key, value):
         path = self.root / "template.properties"
-        path.write_text(path.read_text().replace(before, after), encoding="utf-8")
+        content = re.sub(r"^" + re.escape(key) + r"=.*$", lambda _: key + "=" + value,
+                         path.read_text(encoding="utf-8"), flags=re.M)
+        path.write_text(content, encoding="utf-8")
 
     def test_valid_config_and_matching_tag(self):
         config = validate(self.root)
@@ -53,11 +56,12 @@ class TemplateTest(unittest.TestCase):
             validate(self.root, "not-a-version")
 
     def test_bad_package_and_version_are_rejected(self):
-        self.change("hook.targetPackage=com.example.xposed.demo", "hook.targetPackage=android")
+        original = validate(self.root)["hook.targetPackage"]
+        self.change("hook.targetPackage", "android")
         with self.assertRaises(ValueError):
             validate(self.root)
-        self.change("hook.targetPackage=android", "hook.targetPackage=com.example.xposed.demo")
-        self.change("module.versionCode=1", "module.versionCode=0")
+        self.change("hook.targetPackage", original)
+        self.change("module.versionCode", "0")
         with self.assertRaises(ValueError):
             validate(self.root)
 
