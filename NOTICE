@@ -1,0 +1,9 @@
+XposedProjectTemplate
+
+The YukiHook integration follows the public YukiHook 1.5.0 documentation and
+demo-module-legacy examples by HighCapable:
+https://github.com/HighCapable/YukiHook/tree/1.5.0/samples
+YukiHook is Copyright (C) 2019 HighCapable, licensed under Apache-2.0.
+
+The Gradle Wrapper scripts and JAR are distributed by the Gradle project
+under Apache-2.0. Existing launcher artwork is retained from this repository.

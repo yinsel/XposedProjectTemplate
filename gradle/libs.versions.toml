@@ -1,24 +1,26 @@
 [versions]
-agp = "8.3.1"
-api = "82"
+# 对齐 YukiHook 1.5.0 官方 demo 的工具链；不要使用动态版本。
+agp = "9.3.3"
+kotlin = "2.4.21"
+ksp = "2.3.12"
+yukihook = "1.5.0"
+kavaref = "1.1.1"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
-appcompat = "1.6.1"
-material = "1.10.0"
-activity = "1.8.0"
-constraintlayout = "2.1.4"
-
-[libraries]
-api = { module = "de.robv.android.xposed:api", version.ref = "api" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
 [plugins]
-androidApplication = { id = "com.android.application", version.ref = "agp" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
+[libraries]
+yukihook-bom = { module = "com.highcapable.yukihookapi:yukihook-bom", version.ref = "yukihook" }
+yukihook-core = { module = "com.highcapable.yukihookapi:yukihook-core" }
+yukihook-runtime-xposed82 = { module = "com.highcapable.yukihookapi:yukihook-runtime-xposed82" }
+yukihook-extension-kavaref = { module = "com.highcapable.yukihookapi:yukihook-extension-kavaref" }
+# KSP 使用独立配置，显式引用同一个版本，不依赖 implementation 的 BOM。
+yukihook-compiler = { module = "com.highcapable.yukihookapi:yukihook-compiler", version.ref = "yukihook" }
+xposed-api = { module = "de.robv.android.xposed:api", version = "82" }
+kavaref-bom = { module = "com.highcapable.kavaref:kavaref-bom", version.ref = "kavaref" }
+kavaref-core = { module = "com.highcapable.kavaref:kavaref-core" }
+kavaref-extension = { module = "com.highcapable.kavaref:kavaref-extension" }
+junit = { module = "junit:junit", version.ref = "junit" }

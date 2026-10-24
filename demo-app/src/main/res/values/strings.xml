@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">YukiHook 测试宿主</string>
+    <string name="instructions">未启用模块时显示原始问候。启用模块、勾选本应用作用域并强制停止后重新启动，应显示 Hello from YukiHook!</string>
+    <string name="refresh">再次调用目标方法</string>
+</resources>

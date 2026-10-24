@@ -1,3 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">xposed</string>
+    <string name="refresh_status">刷新状态</string>
+    <string name="active">模块已激活</string>
+    <string name="inactive">模块未激活</string>
+    <string name="no_framework">未检测到框架</string>
+    <string name="module_status">%1$s\n\n版本：%2$s\n目标包名：%3$s\n框架：%4$s\n\n请在 LSPosed 中启用模块，勾选目标应用，强制停止并重新启动目标应用。\n\n激活状态不代表目标方法已经 Hook 成功，请在测试宿主中验证结果。</string>
 </resources>
